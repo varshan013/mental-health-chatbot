@@ -2,83 +2,143 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mental Health Chatbot</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f4f8;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .chat-container {
-      width: 400px;
-      height: 550px;
-      background: white;
-      border-radius: 10px;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .chat-header {
-      padding: 15px;
-      background: #6c63ff;
-      color: white;
-      text-align: center;
-      font-weight: bold;
-    }
-    .chat-box {
-      flex: 1;
-      padding: 10px;
-      overflow-y: auto;
-    }
-    .user {
-      text-align: right;
-      margin: 5px;
-      color: #333;
-    }
-    .bot {
-      text-align: left;
-      margin: 5px;
-      color: #6c63ff;
-    }
-    .input-box {
-      display: flex;
-      border-top: 1px solid #ddd;
-    }
-    input {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      outline: none;
-    }
-    button {
-      padding: 10px;
-      background: #6c63ff;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    button {
-        pointer-events: auto;
-        z-index: 10;
-    }
-
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mental Health Companion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
 
-<div class="chat-container">
-  <div class="chat-header">🧠 Mental Health Chatbot</div>
-  <div class="chat-box" id="chat-box"></div>
-  <div class="input-box">
-    <input id="user-input" placeholder="Type your message..." />
-    <button id="send-btn">Send</button>
+<div class="app">
+
+  <!-- Landing Screen -->
+  <div id="landing-screen" class="landing-screen">
+    <div class="landing-content">
+      <div class="landing-icon" aria-hidden="true">🌿</div>
+      <h1 class="landing-title">Your Mental Health Companion</h1>
+      <p class="landing-subtitle">
+        A calm, supportive space to explore your feelings and find helpful guidance — whenever you need it.
+      </p>
+
+      <div class="landing-disclaimer">
+        <span class="landing-disclaimer-icon" aria-hidden="true">ℹ️</span>
+        <p>
+          This chatbot provides general wellness information only and is <strong>not a substitute for professional medical advice, diagnosis, or treatment</strong>. If you are in crisis, please contact emergency services or a crisis helpline immediately.
+        </p>
+      </div>
+
+      <div class="suggestion-cards">
+        <button class="suggestion-card" data-prompt="I'm feeling anxious today. Can you help me calm down?">
+          <span class="suggestion-card-icon" aria-hidden="true">🌊</span>
+          <span class="suggestion-card-text">I'm feeling anxious today</span>
+        </button>
+        <button class="suggestion-card" data-prompt="What are some tips for getting better sleep?">
+          <span class="suggestion-card-icon" aria-hidden="true">🌙</span>
+          <span class="suggestion-card-text">Tips for better sleep</span>
+        </button>
+        <button class="suggestion-card" data-prompt="How can I manage stress in my daily life?">
+          <span class="suggestion-card-icon" aria-hidden="true">🍃</span>
+          <span class="suggestion-card-text">How to manage stress</span>
+        </button>
+        <button class="suggestion-card" data-prompt="I'm feeling overwhelmed. What should I do?">
+          <span class="suggestion-card-icon" aria-hidden="true">💚</span>
+          <span class="suggestion-card-text">I'm feeling overwhelmed</span>
+        </button>
+      </div>
+
+        <div class="landing-divider">
+            <span>or start your own conversation</span>
+        </div>
+        
+        <div class="landing-input-wrapper">
+            <input
+                id="landing-input"
+                type="text"
+                placeholder="Share what's on your mind..."
+                autocomplete="off"
+                />
+            
+            <button id="landing-send-btn" class="landing-send-btn">
+                <svg viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+                    
+                    <path d="M22 2L11 13"/>
+                    <path d="M22 2l-7 20-4-9-9-4 20-7z"/>
+                
+                </svg>
+            
+            </button>
+        
+        </div>
+
+     
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <p class="landing-footer">Powered by AI · Your conversations are private</p>
+    </div>
   </div>
+
+  <!-- Chat Screen -->
+  <div id="chat-screen" class="chat-screen hidden">
+    <header class="chat-header">
+      <div class="chat-header-left">
+        <div class="chat-header-icon" aria-hidden="true">🌿</div>
+        <div>
+          <div class="chat-header-title">Mental Health Companion</div>
+          <div class="chat-header-subtitle">Here to listen and support you</div>
+        </div>
+      </div>
+      <button id="new-chat-btn" class="new-chat-btn" aria-label="Start a new chat">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+        <span class="btn-label">New Chat</span>
+      </button>
+    </header>
+
+    <div class="chat-box" id="chat-box">
+      <div class="chat-box-inner" id="chat-box-inner"></div>
+    </div>
+
+    <div class="input-area">
+      <div class="input-wrapper">
+        <input
+          id="user-input"
+          type="text"
+          placeholder="Share what's on your mind..."
+          autocomplete="off"
+          aria-label="Your message"
+        />
+        <button id="send-btn" class="send-btn" aria-label="Send message">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+          </svg>
+        </button>
+      </div>
+      <p class="input-hint">Not a substitute for professional care · In crisis, call emergency services</p>
+    </div>
+  </div>
+
 </div>
 
-<script src="static/script.js" defer></script>
-
+<script src="/static/script.js" defer></script>
 </body>
 </html>
